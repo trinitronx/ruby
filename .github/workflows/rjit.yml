@@ -79,17 +79,17 @@ jobs:
 
       - run: $SETARCH make
 
-      - name: Set up Launchable
-        uses: ./.github/actions/launchable/setup
-        with:
-          os: ubuntu-22.04
-          test-task: test
-          launchable-token: ${{ secrets.LAUNCHABLE_TOKEN }}
-          builddir: build
-          srcdir: src
-          launchable-workspace: ruby-make-btest
-          test-opts: ${{ matrix.run_opts }}
-        continue-on-error: true
+#      - name: Set up Launchable
+#        uses: ./.github/actions/launchable/setup
+#        with:
+#          os: ubuntu-22.04
+#          test-task: test
+#          launchable-token: ${{ secrets.LAUNCHABLE_TOKEN }}
+#          builddir: build
+#          srcdir: src
+#          launchable-workspace: ruby-make-btest
+#          test-opts: ${{ matrix.run_opts }}
+#        continue-on-error: true
 
       - name: make test
         run: |
@@ -119,11 +119,11 @@ jobs:
           GNUMAKEFLAGS: ''
           RUN_OPTS: ${{ matrix.run_opts }}
 
-      - uses: ./.github/actions/slack
-        with:
-          label: ${{ matrix.run_opts }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SIMPLER_ALERTS_URL }} # ruby-lang slack: ruby/simpler-alerts-bot
-        if: ${{ failure() }}
+#      - uses: ./.github/actions/slack
+#        with:
+#          label: ${{ matrix.run_opts }}
+#          SLACK_WEBHOOK_URL: ${{ secrets.SIMPLER_ALERTS_URL }} # ruby-lang slack: ruby/simpler-alerts-bot
+#        if: ${{ failure() }}
 
 defaults:
   run:

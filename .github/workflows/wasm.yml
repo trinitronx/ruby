@@ -154,11 +154,11 @@ jobs:
           ruby ./bootstraptest/runner.rb --ruby="$(which wasmtime) run $PWD/../build/ruby --mapdir /::./ -- " --verbose "--sets=$NO_THREAD_TESTS"
         working-directory: src
 
-      - uses: ./.github/actions/slack
-        with:
-          label: ${{ matrix.entry.name }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SIMPLER_ALERTS_URL }} # ruby-lang slack: ruby/simpler-alerts-bot
-        if: ${{ failure() }}
+#      - uses: ./.github/actions/slack
+#        with:
+#          label: ${{ matrix.entry.name }}
+#          SLACK_WEBHOOK_URL: ${{ secrets.SIMPLER_ALERTS_URL }} # ruby-lang slack: ruby/simpler-alerts-bot
+#        if: ${{ failure() }}
 
       # Workaround for https://github.com/orgs/community/discussions/25220
       - name: Save Pull Request number

@@ -69,8 +69,8 @@ jobs:
 
       - run: git diff --no-ext-diff --ignore-submodules --exit-code
 
-      - uses: ./.github/actions/slack
-        with:
-          label: ${{ matrix.os }} / Dependencies need to update
-          SLACK_WEBHOOK_URL: ${{ secrets.SIMPLER_ALERTS_URL }} # ruby-lang slack: ruby/simpler-alerts-bot
-        if: ${{ failure() }}
+#      - uses: ./.github/actions/slack
+#        with:
+#          label: ${{ matrix.os }} / Dependencies need to update
+#          SLACK_WEBHOOK_URL: ${{ secrets.SIMPLER_ALERTS_URL }} # ruby-lang slack: ruby/simpler-alerts-bot
+#        if: ${{ failure() }}

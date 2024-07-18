@@ -12,8 +12,8 @@ on:
       - '.github/workflows/bundled_gems.yml'
       - 'gems/bundled_gems'
   merge_group:
-  schedule:
-    - cron: '45 6 * * *'
+#  schedule:
+#    - cron: '45 6 * * *'
   workflow_dispatch:
 
 permissions: # added using https://github.com/step-security/secure-workflows
@@ -106,30 +106,30 @@ jobs:
           TEST_BUNDLED_GEMS_ALLOW_FAILURES: ''
         if: ${{ steps.diff.outputs.gems }}
 
-      - name: Commit
-        run: |
-          git pull --ff-only origin ${GITHUB_REF#refs/heads/}
-          message="Update bundled gems list"
-          if [ -z "${gems}" ]; then
-            git commit --message="${message} at ${GITHUB_SHA:0:30} [ci skip]"
-          else
-            git commit --message="${message} as of ${TODAY}"
-          fi
-          git push origin ${GITHUB_REF#refs/heads/}
-        env:
-          TODAY: ${{ steps.bundled_gems.outputs.latest_date || env.TODAY }}
-          EMAIL: svn-admin@ruby-lang.org
-          GIT_AUTHOR_NAME: git
-          GIT_COMMITTER_NAME: git
-          gems: ${{ steps.diff.outputs.gems }}
-        if: >-
-          ${{
-          github.repository == 'ruby/ruby' &&
-          !startsWith(github.event_name, 'pull') &&
-          steps.diff.outputs.update
-          }}
+#      - name: Commit
+#        run: |
+#          git pull --ff-only origin ${GITHUB_REF#refs/heads/}
+#          message="Update bundled gems list"
+#          if [ -z "${gems}" ]; then
+#            git commit --message="${message} at ${GITHUB_SHA:0:30} [ci skip]"
+#          else
+#            git commit --message="${message} as of ${TODAY}"
+#          fi
+#          git push origin ${GITHUB_REF#refs/heads/}
+#        env:
+#          TODAY: ${{ steps.bundled_gems.outputs.latest_date || env.TODAY }}
+#          EMAIL: svn-admin@ruby-lang.org
+#          GIT_AUTHOR_NAME: git
+#          GIT_COMMITTER_NAME: git
+#          gems: ${{ steps.diff.outputs.gems }}
+#        if: >-
+#          ${{
+#          github.repository == 'ruby/ruby' &&
+#          !startsWith(github.event_name, 'pull') &&
+#          steps.diff.outputs.update
+#          }}
 
-      - uses: ./.github/actions/slack
-        with:
-          SLACK_WEBHOOK_URL: ${{ secrets.SIMPLER_ALERTS_URL }} # ruby-lang slack: ruby/simpler-alerts-bot
-        if: ${{ failure() }}
+#      - uses: ./.github/actions/slack
+#        with:
+#          SLACK_WEBHOOK_URL: ${{ secrets.SIMPLER_ALERTS_URL }} # ruby-lang slack: ruby/simpler-alerts-bot
+#        if: ${{ failure() }}

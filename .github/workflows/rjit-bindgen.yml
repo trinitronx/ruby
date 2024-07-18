@@ -76,10 +76,10 @@ jobs:
       - run: git diff --exit-code
         working-directory: src
 
-      - uses: ./.github/actions/slack
-        with:
-          SLACK_WEBHOOK_URL: ${{ secrets.SIMPLER_ALERTS_URL }} # ruby-lang slack: ruby/simpler-alerts-bot
-        if: ${{ failure() }}
+#      - uses: ./.github/actions/slack
+#        with:
+#          SLACK_WEBHOOK_URL: ${{ secrets.SIMPLER_ALERTS_URL }} # ruby-lang slack: ruby/simpler-alerts-bot
+#        if: ${{ failure() }}
 
 defaults:
   run:

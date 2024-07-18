@@ -59,8 +59,8 @@ jobs:
         env:
           CHECK_LEAKS: true
 
-      - uses: ./.github/actions/slack
-        with:
-          label: ${{ matrix.ruby }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SIMPLER_ALERTS_URL }} # ruby-lang slack: ruby/simpler-alerts-bot
-        if: ${{ failure() }}
+#      - uses: ./.github/actions/slack
+#        with:
+#          label: ${{ matrix.ruby }}
+#          SLACK_WEBHOOK_URL: ${{ secrets.SIMPLER_ALERTS_URL }} # ruby-lang slack: ruby/simpler-alerts-bot
+#        if: ${{ failure() }}

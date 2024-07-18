@@ -1,7 +1,9 @@
-name: Auto Request Review
-on:
-  pull_request_target:
-    types: [opened, ready_for_review, reopened]
+#name: Auto Request Review
+## Set to manual trigger only (effectively disable this b/c this is a Forked repo)
+on: workflow_dispatch
+#on:
+#  pull_request_target:
+#    types: [opened, ready_for_review, reopened]
 
 permissions:
   contents: read
