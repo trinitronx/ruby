@@ -955,7 +955,7 @@ rb_yjit_dump_iseq_loc(const rb_iseq_t *iseq, uint32_t insn_idx)
     long len;
     VALUE path = rb_iseq_path(iseq);
     RSTRING_GETMEM(path, ptr, len);
-    fprintf(stderr, "%s %.*s:%u\n", __func__, (int)len, ptr, rb_iseq_line_no(iseq, insn_idx));
+    fprintf(stderr, "%s %.*s:%u\n", __PRETTYFUNC__, (int)len, ptr, rb_iseq_line_no(iseq, insn_idx));
 }
 
 // Get the number of digits required to print an integer

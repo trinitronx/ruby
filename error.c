@@ -3762,7 +3762,7 @@ rb_sys_fail_str(VALUE mesg)
     rb_exc_raise(make_errno_exc_str(mesg));
 }
 
-#ifdef RUBY_FUNCTION_NAME_STRING
+#ifdef HAVE_PRETTYFUNC
 void
 rb_sys_fail_path_in(const char *func_name, VALUE path)
 {

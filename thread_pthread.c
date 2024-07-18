@@ -296,7 +296,7 @@ event_name(rb_event_flag_t event)
 
 #define RB_INTERNAL_THREAD_HOOK(event, th) \
     if (UNLIKELY(rb_internal_thread_event_hooks)) { \
-        fprintf(stderr, "[thread=%"PRIxVALUE"] %s in %s (%s:%d)\n", th->self, event_name(event), __func__, __FILE__, __LINE__); \
+        fprintf(stderr, "[thread=%"PRIxVALUE"] %s in %s (%s:%d)\n", th->self, event_name(event), __PRETTYFUNC__, __FILE__, __LINE__); \
         rb_thread_execute_hooks(event, th); \
     }
 #else

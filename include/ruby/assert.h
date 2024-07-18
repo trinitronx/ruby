@@ -140,8 +140,8 @@ RBIMPL_ATTR_FORMAT(RBIMPL_PRINTF_FORMAT, 5, 6)
 void rb_assert_failure_detail(const char *file, int line, const char *name, const char *expr, const char *fmt, ...);
 RBIMPL_SYMBOL_EXPORT_END()
 
-#ifdef RUBY_FUNCTION_NAME_STRING
-# define RBIMPL_ASSERT_FUNC RUBY_FUNCTION_NAME_STRING
+#ifdef HAVE_PRETTYFUNC
+# define RBIMPL_ASSERT_FUNC __PRETTYFUNC__
 #else
 # define RBIMPL_ASSERT_FUNC RBIMPL_CAST((const char *)0)
 #endif

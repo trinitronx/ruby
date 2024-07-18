@@ -16,6 +16,8 @@ AC_DEFUN([RUBY_M4_INCLUDE], [m4_include([tool/m4/$1])dnl
 ])
 RUBY_M4_INCLUDE([_colorize_result_prepare.m4])dnl
 RUBY_M4_INCLUDE([ac_msg_result.m4])dnl
+RUBY_M4_INCLUDE([ax_c_var_func.m4])dnl
+RUBY_M4_INCLUDE([ax_cxx_var_prettyfunc.m4])dnl
 RUBY_M4_INCLUDE([colorize_result.m4])dnl
 RUBY_M4_INCLUDE([ruby_append_option.m4])dnl
 RUBY_M4_INCLUDE([ruby_append_options.m4])dnl
@@ -1794,25 +1796,8 @@ AC_ARG_ENABLE(mathn,
     AS_HELP_STRING([--enable-mathn], [enable canonicalization for mathn]),
     [AC_MSG_ERROR([mathn support has been dropped])])
 
-AC_CACHE_CHECK(for function name string predefined identifier,
-    rb_cv_function_name_string,
-    [AS_CASE(["$target_os"],[openbsd*],[
-      rb_cv_function_name_string=__func__
-     ],[
-      rb_cv_function_name_string=no
-      RUBY_WERROR_FLAG([
-        for func in __func__ __FUNCTION__; do
-            AC_LINK_IFELSE([AC_LANG_PROGRAM([[@%:@include <stdio.h>]],
-					    [[puts($func);]])],
-            [rb_cv_function_name_string=$func
-            break])
-        done
-      ])
-    ])]
-)
-AS_IF([test "$rb_cv_function_name_string" != no], [
-    AC_DEFINE_UNQUOTED(RUBY_FUNCTION_NAME_STRING, [$rb_cv_function_name_string])
-])
+# Check for __func__ and __FUNCTION__ Cxx predefined identifier
+AX_CXX_VAR_PRETTYFUNC
 
 AC_CACHE_CHECK(if enum over int is allowed, rb_cv_enum_over_int, [
     rb_cv_enum_over_int=no

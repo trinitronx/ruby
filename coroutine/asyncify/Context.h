@@ -39,7 +39,7 @@ COROUTINE coroutine_trampoline(void * _start, void * _context);
 
 static inline void coroutine_initialize_main(struct coroutine_context * context)
 {
-    if (ASYNCIFY_CORO_DEBUG) fprintf(stderr, "[%s] entry (context = %p)\n", __func__, context);
+    if (ASYNCIFY_CORO_DEBUG) fprintf(stderr, "[%s] entry (context = %p)\n", __PRETTYFUNC__, context);
     // NULL fiber entry means it's the main fiber, and handled specially.
     rb_wasm_init_context(&context->fc, NULL, NULL, NULL);
     // mark the main fiber has already started
@@ -51,7 +51,7 @@ static inline void coroutine_initialize(struct coroutine_context *context, corou
     // Linear stack pointer must be always aligned down to 16 bytes.
     // https://github.com/WebAssembly/tool-conventions/blob/c74267a5897c1bdc9aa60adeaf41816387d3cd12/BasicCABI.md#the-linear-stack
     uintptr_t sp = ((uintptr_t)stack + size) & ~0xF;
-    if (ASYNCIFY_CORO_DEBUG) fprintf(stderr, "[%s] entry (context = %p, stack = %p ... %p)\n", __func__, context, stack, (char *)sp);
+    if (ASYNCIFY_CORO_DEBUG) fprintf(stderr, "[%s] entry (context = %p, stack = %p ... %p)\n", __PRETTYFUNC__, context, stack, (char *)sp);
     rb_wasm_init_context(&context->fc, coroutine_trampoline, start, context);
     // record the initial stack pointer position to restore it after resumption
     context->current_sp = (char *)sp;
@@ -61,11 +61,11 @@ static inline void coroutine_initialize(struct coroutine_context *context, corou
 
 static inline struct coroutine_context * coroutine_transfer(struct coroutine_context * current, struct coroutine_context * target)
 {
-    if (ASYNCIFY_CORO_DEBUG) fprintf(stderr, "[%s] entry (current = %p, target = %p)\n", __func__, current, target);
+    if (ASYNCIFY_CORO_DEBUG) fprintf(stderr, "[%s] entry (current = %p, target = %p)\n", __PRETTYFUNC__, current, target);
     struct coroutine_context * previous = target->from;
 
     target->from = current;
-    if (ASYNCIFY_CORO_DEBUG) fprintf(stderr, "[%s] current->current_sp = %p -> %p\n", __func__, current->current_sp, rb_wasm_get_stack_pointer());
+    if (ASYNCIFY_CORO_DEBUG) fprintf(stderr, "[%s] current->current_sp = %p -> %p\n", __PRETTYFUNC__, current->current_sp, rb_wasm_get_stack_pointer());
     // record the current stack pointer position to restore it after resumption
     current->current_sp = rb_wasm_get_stack_pointer();
 
@@ -84,7 +84,7 @@ static inline struct coroutine_context * coroutine_transfer(struct coroutine_con
 
 static inline void coroutine_destroy(struct coroutine_context * context)
 {
-    if (ASYNCIFY_CORO_DEBUG) fprintf(stderr, "[%s] entry (context = %p)\n", __func__, context);
+    if (ASYNCIFY_CORO_DEBUG) fprintf(stderr, "[%s] entry (context = %p)\n", __PRETTYFUNC__, context);
     context->stack_base = NULL;
     context->size = 0;
     context->from = NULL;
