@@ -3093,8 +3093,8 @@ rb_file_s_lutime(int argc, VALUE *argv, VALUE _)
 #define rb_file_s_lutime rb_f_notimplement
 #endif
 
-#ifdef RUBY_FUNCTION_NAME_STRING
-# define syserr_fail2(e, s1, s2) syserr_fail2_in(RUBY_FUNCTION_NAME_STRING, e, s1, s2)
+#ifdef HAVE_PRETTYFUNC
+# define syserr_fail2(e, s1, s2) syserr_fail2_in(__PRETTYFUNC__, e, s1, s2)
 #else
 # define syserr_fail2_in(func, e, s1, s2) syserr_fail2(e, s1, s2)
 #endif
@@ -3118,7 +3118,7 @@ syserr_fail2_in(const char *func, int e, VALUE s1, VALUE s2)
     rb_str_cat2(str, ", ");
     rb_str_append(str, rb_str_ellipsize(s2, max_pathlen));
     rb_str_cat2(str, ")");
-#ifdef RUBY_FUNCTION_NAME_STRING
+#ifdef HAVE_PRETTYFUNC
     rb_syserr_fail_path_in(func, e, str);
 #else
     rb_syserr_fail_path(e, str);

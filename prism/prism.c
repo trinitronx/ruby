@@ -372,7 +372,7 @@ debug_lex_state_set(pm_parser_t *parser, pm_lex_state_t state, char const * call
     fprintf(stderr, "\n");
 }
 
-#define lex_state_set(parser, state) debug_lex_state_set(parser, state, __func__, __LINE__)
+#define lex_state_set(parser, state) debug_lex_state_set(parser, state, __PRETTYFUNC__, __LINE__)
 #endif
 
 /******************************************************************************/

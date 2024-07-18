@@ -1637,14 +1637,14 @@ dir_s_rmdir(VALUE obj, VALUE dir)
 }
 
 struct warning_args {
-#ifdef RUBY_FUNCTION_NAME_STRING
+#ifdef HAVE_PRETTYFUNC
     const char *func;
 #endif
     const char *mesg;
     rb_encoding *enc;
 };
 
-#ifndef RUBY_FUNCTION_NAME_STRING
+#ifndef HAVE_PRETTYFUNC
 #define sys_enc_warning_in(func, mesg, enc) sys_enc_warning(mesg, enc)
 #endif
 
@@ -1652,7 +1652,7 @@ static VALUE
 sys_warning_1(VALUE mesg)
 {
     const struct warning_args *arg = (struct warning_args *)mesg;
-#ifdef RUBY_FUNCTION_NAME_STRING
+#ifdef HAVE_PRETTYFUNC
     rb_sys_enc_warning(arg->enc, "%s: %s", arg->func, arg->mesg);
 #else
     rb_sys_enc_warning(arg->enc, "%s", arg->mesg);
@@ -1664,7 +1664,7 @@ static void
 sys_enc_warning_in(const char *func, const char *mesg, rb_encoding *enc)
 {
     struct warning_args arg;
-#ifdef RUBY_FUNCTION_NAME_STRING
+#ifdef HAVE_PRETTYFUNC
     arg.func = func;
 #endif
     arg.mesg = mesg;
@@ -1674,7 +1674,7 @@ sys_enc_warning_in(const char *func, const char *mesg, rb_encoding *enc)
 
 #define GLOB_VERBOSE	(1U << (sizeof(int) * CHAR_BIT - 1))
 #define sys_warning(val, enc) \
-    ((flags & GLOB_VERBOSE) ? sys_enc_warning_in(RUBY_FUNCTION_NAME_STRING, (val), (enc)) :(void)0)
+    ((flags & GLOB_VERBOSE) ? sys_enc_warning_in(__PRETTYFUNC__, (val), (enc)) :(void)0)
 
 static inline size_t
 glob_alloc_size(size_t x, size_t y)

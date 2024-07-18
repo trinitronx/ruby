@@ -28,9 +28,9 @@
 
 #define rb_raise_static(e, m) \
     rb_raise_cstr_i((e), rb_str_new_static((m), rb_strlen_lit(m)))
-#ifdef RUBY_FUNCTION_NAME_STRING
-# define rb_syserr_fail_path(err, path) rb_syserr_fail_path_in(RUBY_FUNCTION_NAME_STRING, (err), (path))
-# define rb_syserr_new_path(err, path) rb_syserr_new_path_in(RUBY_FUNCTION_NAME_STRING, (err), (path))
+#ifdef HAVE_PRETTYFUNC
+# define rb_syserr_fail_path(err, path) rb_syserr_fail_path_in(__PRETTYFUNC__, (err), (path))
+# define rb_syserr_new_path(err, path) rb_syserr_new_path_in(__PRETTYFUNC__, (err), (path))
 #else
 # define rb_syserr_fail_path(err, path) rb_syserr_fail_str((err), (path))
 # define rb_syserr_new_path(err, path) rb_syserr_new_str((err), (path))
@@ -164,7 +164,7 @@ static inline bool rb_typeddata_is_instance_of_inline(VALUE obj, const rb_data_t
 RUBY_SYMBOL_EXPORT_BEGIN
 /* error.c (export) */
 int rb_bug_reporter_add(void (*func)(FILE *, void *), void *data);
-#ifdef RUBY_FUNCTION_NAME_STRING
+#ifdef HAVE_PRETTYFUNC
 NORETURN(void rb_sys_fail_path_in(const char *func_name, VALUE path));
 NORETURN(void rb_syserr_fail_path_in(const char *func_name, int err, VALUE path));
 VALUE rb_syserr_new_path_in(const char *func_name, int n, VALUE path);

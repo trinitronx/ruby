@@ -432,7 +432,7 @@ ractor_queue_enq(rb_ractor_t *r, struct rb_ractor_queue *rq, struct rb_ractor_ba
         rq->size *= 2;
     }
     rq->baskets[(rq->start + rq->cnt++) % rq->size] = *basket;
-    // fprintf(stderr, "%s %p->cnt:%d\n", RUBY_FUNCTION_NAME_STRING, (void *)rq, rq->cnt);
+    // fprintf(stderr, "%s %p->cnt:%d\n", __PRETTYFUNC__, (void *)rq, rq->cnt);
 }
 
 static void
@@ -682,7 +682,7 @@ ractor_sleep_with_cleanup(rb_execution_context_t *ec, rb_ractor_t *cr, enum rb_r
     cr->sync.wait.status = wait_status;
     cr->sync.wait.wakeup_status = wakeup_none;
 
-    // fprintf(stderr, "%s  r:%p status:%s, wakeup_status:%s\n", RUBY_FUNCTION_NAME_STRING, (void *)cr,
+    // fprintf(stderr, "%s  r:%p status:%s, wakeup_status:%s\n", __PRETTYFUNC__, (void *)cr,
     //                 wait_status_str(cr->sync.wait.status), wakeup_status_str(cr->sync.wait.wakeup_status));
 
     RUBY_DEBUG_LOG("sleep by %s", wait_status_str(wait_status));
